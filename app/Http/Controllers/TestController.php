@@ -28,17 +28,10 @@ class TestController extends Controller
     //Menginsert data test
     public function store(Request $request)
     {
-        //panggil new <NamaModel> untuk membuat model baru
-        $data = new Test;
-
-        //$data->namakolom => $request->namakolom
-        $data->str = $request->str;
-        $data->bool = $request->bool;
-        $data->date = $request->date;
-
-        //$data->save() untuk menyiman model ke dalam tabel
-        $data->save();
-
+        //panggil new <NamaModel> untuk membuat model baru dan 'record' request di dalamnya
+        $data = (new Test)->record($request);
+        //jika terdapat detail, insert juga detailnya
+        $data = $data->recordDetail($request->detail);
         return bd_json($data);
     }
 
@@ -52,25 +45,23 @@ class TestController extends Controller
     //Mengupdate data by id
     public function update(Request $request, $id)
     {
-        //Mengambil model data by id
-        $data = Test::find($id);
-
-        //Mengupdate model data dengan yang baru
-        $data->str = $request->str;
-        $data->bool = $request->bool;
-        $data->date = $request->date;
-
-        $data->save();
-
+        //Mengambil model data by id dan mengisi dengan 'record' request baru
+        $data = Test::find($id)->record($request);
+        //Jika terdapat detail maka hapus detail yang ada, kemudian isi kembali
+        $data = $data->deleteDetail()->recordDetail($request->detail);
         return bd_json($data);
     }
 
     //Menghapus data by id
     public function destroy($id)
     {
+        //Mengambil model data by id
         $data = Test::find($id);
-        $data->delete();
-
+        if ($data) {
+            //Jika model ada, maka hapus
+            $data->deleteDetail(); //hapus detailnya jika perlu
+            $data->delete();
+        }
         return bd_json($data);
     }
 

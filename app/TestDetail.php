@@ -24,4 +24,17 @@ class TestDetail extends Model
     protected $hidden = [
         'deleted_at', 'created_at','updated_at'
     ];
+
+    //Fungsi untuk menyimpan/mengupdate model
+    public function record($request, $idParent = 0) {
+        //$data->namakolom => $request->namakolom
+        $this->id_test = $idParent;
+        $this->str_1 = $request->str_1;
+        $this->str_2 = $request->str_2;
+        $this->enum = $request->enum;
+        $this->decimal = $request->decimal;
+        $this->save();
+
+        return $this;
+    }
 }

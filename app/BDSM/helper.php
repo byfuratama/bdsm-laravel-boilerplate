@@ -27,3 +27,9 @@ if (! function_exists('bd_json')) {
     return jsend_fail($json);
   }
 }
+
+if (! function_exists('bd_apply')) {
+  function bd_apply($data) {
+    
+  }
+}

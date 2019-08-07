@@ -11,6 +11,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\TestDetail;
 
 class Test extends Model
 {
@@ -24,4 +25,36 @@ class Test extends Model
     protected $hidden = [
         'deleted_at', 'created_at','updated_at'
     ];
+
+    //Fungsi untuk menyimpan/mengupdate model
+    public function record($request) {
+        //$data->namakolom => $request->namakolom
+        $this->str = $request->str;
+        $this->int = $request->int;
+        $this->bool = $request->bool;
+        $this->date = $request->date;
+        $this->save();
+
+        return $this;
+    }
+
+    public function recordDetail($detail) {
+        $detailData = [];
+        foreach ($detail as $dtl) {
+            $detailData[] = (new TestDetail())->record((object) $dtl, $this->id);
+        }
+        $this->detail = $detailData;
+
+        return $this;
+    }
+
+    public function deleteDetail() {
+        $detailData = TestDetail::where('id_test', $this->id);
+        $this->detail = $detailData->get();
+        $detailData->delete();
+
+        return $this;
+    }
+
+    
 }

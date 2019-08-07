@@ -9,6 +9,8 @@ class DatabaseSeeder extends Seeder
      *
      * @return void
      */
+
+    //Seeder berfungsi untuk memasukkan 'seed' data ke database
     public function run()
     {
         DB::table('users')->truncate();
@@ -28,14 +30,30 @@ class DatabaseSeeder extends Seeder
         ]);
             
         DB::table('test')->truncate();
-        for ($i=0; $i < 50; $i++) { 
+        DB::table('test_detail')->truncate();
+        for ($i=1; $i <= 10; $i++) { 
             DB::table('test')->insert([
                 [
+                    'int' => $i,
                     'str' => 'string ' . $i,
                     'bool' => 0,
                     'date' => '2019-10-10'
                 ]
             ]);
+            for ($j=1; $j <= rand(1,3); $j++) {
+                $detail = [
+                    'id_test' => $i,
+                    'enum' => 'enum_' . $j,
+                    'decimal' => rand(99,999) / rand(1,5)
+                ];
+                if (rand(1,10) < 5) {
+                    $detail['str_1'] = 'str_' . $j;
+                }
+                if (rand(1,10) > 5) {
+                    $detail['str_2'] = 'str_' . $j;
+                }
+                DB::table('test_detail')->insert($detail);
+            }
         }
     }
 }

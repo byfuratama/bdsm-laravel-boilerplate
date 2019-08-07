@@ -16,25 +16,15 @@ class TestDetail extends Model
 {
     //Memakai fitur softdelete laravel untuk menyembunyikan data ketika dihapus ketimbang menghapus secara permanen
     use SoftDeletes;
+    //Memakai fungsi tambahan BDSM
+    use \App\BDSM\ModelHelper;
 
     //Laravel otomatis membaca nama tabel secara 'plural', untuk menghindari hal tsb kita memberi nama $table dengan nama baru
     protected $table = 'test_detail';
 
     //Sembunyikan data yang akan dikembalikan dalam bentuk json
-    protected $hidden = [
-        'deleted_at', 'created_at','updated_at'
-    ];
+    protected $hidden = ['deleted_at', 'created_at','updated_at'];
 
-    //Fungsi untuk menyimpan/mengupdate model
-    public function record($request, $idParent = 0) {
-        //$data->namakolom => $request->namakolom
-        $this->id_test = $idParent;
-        $this->str_1 = $request->str_1;
-        $this->str_2 = $request->str_2;
-        $this->enum = $request->enum;
-        $this->decimal = $request->decimal;
-        $this->save();
-
-        return $this;
-    }
+    //Isikan field yang bisa diisi ke tabel
+    protected $fillable = ['id_test','str_1','str_2','enum','decimal'];
 }

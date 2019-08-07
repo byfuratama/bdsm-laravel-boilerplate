@@ -65,5 +65,9 @@ class TestController extends Controller
         return bd_json($data);
     }
 
+    public function indexWithDetail() {
+        
+    }
+
 
 }

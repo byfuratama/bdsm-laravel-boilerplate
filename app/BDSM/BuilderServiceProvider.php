@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Providers;
+namespace App\BDSM;
 
 use Exception;
 use Illuminate\Database\Eloquent\Builder as EBuilder;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\ServiceProvider;
+// use Illuminate\Http\Request;
 
-class BD_BuilderServiceProvider extends ServiceProvider
+class BuilderServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application services.
@@ -16,6 +17,7 @@ class BD_BuilderServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+
         Builder::macro('addSubSelect', function ($column, $query) {
             if (is_null($this->columns)) {
                 $this->select($this->from.'.*');

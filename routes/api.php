@@ -27,7 +27,8 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::put('test/{id}', 'TestController@update');
     Route::delete('test/{id}', 'TestController@destroy');
     
-    Route::get('test/detail', 'TestController@withDetail');
+    Route::get('test/detail', 'TestController@indexWithDetail');
+    Route::get('test/{id}/detail', 'TestController@showWithDetail');
 
 
 });

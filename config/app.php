@@ -177,7 +177,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         
-        App\Providers\BD_BuilderServiceProvider::class,
+        App\BDSM\BuilderServiceProvider::class,
 
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
 

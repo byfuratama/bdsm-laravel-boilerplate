@@ -23,12 +23,12 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     //Route::<Method>('<NamaURL>', '<NamaController>@<NamaFunction>');
     Route::get('test', 'TestController@index');
     Route::post('test', 'TestController@store');
-    Route::get('test/{id}', 'TestController@show');
-    Route::put('test/{id}', 'TestController@update');
-    Route::delete('test/{id}', 'TestController@destroy');
+    Route::get('test/{id}', 'TestController@show')->where('id', '[0-9]+');
+    Route::put('test/{id}', 'TestController@update')->where('id', '[0-9]+');
+    Route::delete('test/{id}', 'TestController@destroy')->where('id', '[0-9]+');
     
-    Route::get('test/detail', 'TestController@indexWithDetail');
-    Route::get('test/{id}/detail', 'TestController@showWithDetail');
+    Route::get('test-detail', 'TestController@indexWithDetail');
+    Route::get('test-detail/{id}', 'TestController@showWithDetail')->where('id', '[0-9]+');
 
 
 });

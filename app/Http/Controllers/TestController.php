@@ -11,6 +11,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Test;
+use App\TestDetail;
 
 class TestController extends Controller
 {
@@ -62,11 +63,32 @@ class TestController extends Controller
             $data->deleteDetail(); //hapus detailnya jika perlu
             $data->delete();
         }
+
         return bd_json($data);
     }
 
+    //Mengambil semua data dengan detail
     public function indexWithDetail() {
+        //Mengambil model semua data test
+        $parentData = Test::select('*');
+        //Mengambil model semua data testdetail
+        $detailData = TestDetail::select('*');
+
+        //Menjoin parent dengan detail
+        //      ModelParent->joinModel(ModelDetail, NamaTabelDetail, PrimaryKeyParent, ForeignKeyParentPadaDetail)
+        $data = $parentData->joinModel($detailData, 'test_detail' , 'test.id' , 'test_detail.id_test');
+
+        return bd_json($data);
+    }
+
+    //Mengambil satu data dengan detail
+    public function showWithDetail($id) {
+        //Mengambil model dengan where, karena find tidak berfungsi untuk join
+        $parentData = Test::select('*')->where('test.id','=',$id);
+        $detailData = TestDetail::select('*');
+        $data = $parentData->joinModel($detailData, 'test_detail','test.id','test_detail.id_test');
         
+        return bd_json($data);
     }
 
 

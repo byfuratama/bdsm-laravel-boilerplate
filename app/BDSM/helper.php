@@ -28,8 +28,29 @@ if (! function_exists('bd_json')) {
   }
 }
 
-if (! function_exists('bd_apply')) {
-  function bd_apply($data) {
-    
+if (! function_exists('tgl_indo')) {
+
+  function tgl_indo($tanggal){
+    $bulan = array (
+        1 =>   'Januari',
+        'Februari',
+        'Maret',
+        'April',
+        'Mei',
+        'Juni',
+        'Juli',
+        'Agustus',
+        'September',
+        'Oktober',
+        'November',
+        'Desember'
+    );
+
+    $pecahkan = explode('-', $tanggal);     
+    if (count($pecahkan) == 1) {
+        $pecahkan = explode('/', $tanggal);
+    }
+    return $pecahkan[2] . ' ' . $bulan[ (int)$pecahkan[1] ] . ' ' . $pecahkan[0];
   }
+    
 }

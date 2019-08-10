@@ -42,12 +42,9 @@ php artisan jwt:secret
 7. Buat database baru dengan nama bdsm dalam phpmyadmin atau heidisql
 
 8. Buka file .env dan ubah parameter berikut menurut database
-
-> DB_DATABASE=bdsm
-
-> DB_USERNAME=root
-
-> DB_PASSWORD=
+##### DB_DATABASE=bdsm
+##### DB_USERNAME=root
+##### DB_PASSWORD=
 
 9. Jalankan migration untuk mengisi dummy data
 ```
@@ -69,3 +66,34 @@ Jika sudah dapat token:
 [GET] /test?token=
 [GET] /test-detail?token=
 ```
+
+## Coba-Coba
+
+Untuk belajar dan coba-coba bisa lihat file-file berikut sebagai referensi, sudah isi komentar
+
+*Model*
+```
+app/Test.php
+app/TestDetail.php
+```
+*Controller*
+```
+app/Http/Controllers/TestController.php
+```
+*Migration*
+```
+database/migrations/create_test_table.php
+database/migrations/create_test_detail_table.php
+```
+*API Route*
+```
+routes/api.php
+```
+
+## Tips
+
+Untuk membuat model, controller, dan migration sekaligus gunakan command berikut
+```
+php artisan make:model Nama -c -m
+```
+

@@ -1,13 +1,43 @@
-<p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
+# BDSM Laravel Boilerplate
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+Merupakan template laravel 5.4 dengan tambahan fungsi-fungsi sendiri
+
+## Requirement
+
+- [Composer](https://getcomposer.org/download/)
+- [Git](https://git-scm.com/downloads) (atau bisa memakai git dengan visual seperti Git-Kraken)
+
+## Instalasi
+
+1. clone repo ini di dalam www/hdtdocs
+```
+git clone https://github.com/byfuratama/bdsm-laravel-boilerplate.git bdsm-laravel
+```
+
+2. Masuk ke dalam folder yang sudah diclone
+```
+cd bdsm-laravel
+```
+
+3. Lakukan instalasi project dan tunggu samapai instalasi selesai
+```
+composer install
+```
+
+4. Copy .env dan generate key untuk aplikasi
+```
+cp .env.example .env
+php artisan key:generate
+```
+
+5. Generate secret JWT untuk API token
+```
+php artisan jwt:secret
+```
 
 ## About Laravel
+
+
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:
 

@@ -17,7 +17,7 @@
          * @param  \Closure  $next
          * @return mixed
          */
-        public function handle($request, Closure $next)
+        public function handle($request, Closure $next, $role = null)
         {
             try {
                 $user = JWTAuth::parseToken()->authenticate();
@@ -29,6 +29,9 @@
                 }else{
                     return jsend_error(['status' => 'Authorization Token not found']);
                 }
+            }
+            if ($role !== null && $user->role !== "superadmin" && !in_array($user->role,explode('|',$role))) {
+                return jsend_error(['status' => 'Access is forbidden for this role']);
             }
             return $next($request);
         }

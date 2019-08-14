@@ -23,6 +23,23 @@ class BuilderServiceProvider extends ServiceProvider
 
             return $this->join($ft,$pk,$fk);
         });
+
+        Builder::macro('searchAllFields', function () {
+            $filter = request('filter');
+            $query = $this;
+            if ($filter != null && func_num_args() > 0) {
+                $props = func_get_args();
+                $query = $query->where(function($q) use ($props,$filter) {
+                    foreach ($props as $prop) {
+                        foreach ($prop['fields'] as $col) {
+                            $q = $q->orWhere($prop['table'].'.'.$col,'LIKE', '%' . $filter . '%');
+                        }
+                    }
+                });
+                return $query->select('*');
+            }
+            return $query->select('*');
+        });
     }
 
     /**

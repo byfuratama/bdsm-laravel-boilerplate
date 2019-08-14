@@ -7,6 +7,7 @@ Route::group([
     Route::post('login', 'AuthController@login');
     Route::group(['middleware' => ['jwt.verify']], function() { 
         Route::post('logout', 'AuthController@logout');
+        Route::post('me', 'AuthController@me');
         Route::post('refresh', 'AuthController@refresh');
         Route::post('payload', 'AuthController@payload');
     });

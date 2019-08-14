@@ -19,4 +19,26 @@ trait ModelHelper {
 
         return $this;
     }
+
+    public function selectAll() {
+        $filter = request('filter');
+        $query = $this;
+        if ($filter != null) {
+            $fillable = $this->fillable;
+            $query = $query->where(function($q) use ($fillable,$filter) {
+                foreach ($fillable as $col) {
+                    $q = $q->orWhere($col,'LIKE', '%' . $filter . '%');
+                }
+            });
+            return $query;
+        }
+        return $query;
+    }
+
+    public function getTableProperties() {
+        return [
+            "table" => $this->table,
+            "fields" => $this->fillable
+        ];
+    }
 }

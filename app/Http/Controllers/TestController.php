@@ -19,11 +19,12 @@ class TestController extends Controller
     public function index()
     {
         //Beri sql query dari model Test
-        //untuk index() kita akan select all
-        $data = Test::select('*');
+        $data = Test::select('*'); //untuk index() kita akan select all
 
-        //Return ke dalam bentuk json untuk diambil front end
-        return bd_json($data);
+        $tableData = (new Test)->getTableProperties(); //Ambil property tabel dari test
+        $data = $data->searchAllFields($tableData); //Filter data dengan property tadi
+
+        return bd_json($data); //Return ke dalam bentuk json untuk diambil front end
     }
 
     //Menginsert data test
@@ -77,6 +78,10 @@ class TestController extends Controller
         //Menjoin parent dengan detail
         //      ModelParent->joinModel(ModelDetail, NamaTabelDetail, PrimaryKeyParent, ForeignKeyParentPadaDetail)
         $data = $parentData->joinModel($detailData, 'test_detail' , 'test.id' , 'test_detail.id_test');
+
+        $parentTableData = (new Test)->getTableProperties(); //Ambil property tabel dari test
+        $detailTableData = (new TestDetail)->getTableProperties(); //Ambil property tabel dari test
+        $data = $data->searchAllFields($parentTableData,$detailTableData); //Filter data dengan property tadi
 
         return bd_json($data);
     }

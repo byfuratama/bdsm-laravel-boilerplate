@@ -24,7 +24,7 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 
     //taruh Route di dalam sini untuk yang perlu authentikasi
     //Route::<Method>('<NamaURL>', '<NamaController>@<NamaFunction>');
-    Route::get('test', 'TestController@index');
+    Route::get('test', 'TestController@indexWithUnit');
     Route::post('test', 'TestController@store');
     Route::get('test/{id}', 'TestController@show')->where('id', '[0-9]+');
     Route::put('test/{id}', 'TestController@update')->where('id', '[0-9]+');
@@ -32,6 +32,12 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     
     Route::get('test-detail', 'TestController@indexWithDetail');
     Route::get('test-detail/{id}', 'TestController@showWithDetail')->where('id', '[0-9]+');
+
+    Route::get('unit', 'UnitController@index');
+    Route::post('unit', 'UnitController@store');
+    Route::get('unit/{id}', 'UnitController@show')->where('id', '[0-9]+');
+    Route::put('unit/{id}', 'UnitController@update')->where('id', '[0-9]+');
+    Route::delete('unit/{id}', 'UnitController@destroy')->where('id', '[0-9]+');
 
 
 });

@@ -12,7 +12,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Test;
 use App\TestDetail;
-use App\Unit;
 
 class TestController extends Controller
 {
@@ -34,7 +33,7 @@ class TestController extends Controller
         //panggil new <NamaModel> untuk membuat model baru dan 'record' request di dalamnya
         $data = (new Test)->record($request);
         //jika terdapat detail, insert juga detailnya
-        // $data = $data->recordDetail($request->detail);
+        $data = $data->recordDetail($request->detail);
         return bd_json($data);
     }
 
@@ -51,7 +50,7 @@ class TestController extends Controller
         //Mengambil model data by id dan mengisi dengan 'record' request baru
         $data = Test::find($id)->record($request);
         //Jika terdapat detail maka hapus detail yang ada, kemudian isi kembali
-        // $data = $data->deleteDetail()->recordDetail($request->detail);
+        $data = $data->deleteDetail()->recordDetail($request->detail);
         return bd_json($data);
     }
 
@@ -65,25 +64,6 @@ class TestController extends Controller
             $data->deleteDetail(); //hapus detailnya jika perlu
             $data->delete();
         }
-
-        return bd_json($data);
-    }
-
-    //Mengambil semua data dengan detail
-    public function indexWithUnit() {
-        //Mengambil model semua data test
-        $parentData = Test::select('*');
-        //Mengambil model semua data testdetail
-        $detailData = Unit::select('*');
-
-        //Menjoin parent dengan detail
-        //      ModelParent->joinModel(ModelDetail, NamaTabelDetail, PrimaryKeyParent, ForeignKeyParentPadaDetail)
-        $data = $parentData->joinModel($detailData, 'unit' , 'unit.id' , 'test.id_unit');
-
-        $parentTableData = (new Test)->getTableProperties(); //Ambil property tabel dari test
-        $detailTableData = (new Unit)->getTableProperties(); //Ambil property tabel dari test
-        $data = $data->searchAllFields($parentTableData,$detailTableData); //Filter data dengan property tadi
-        $data = $data->select('test.*','unit.nama as unit');
 
         return bd_json($data);
     }

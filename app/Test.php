@@ -26,7 +26,7 @@ class Test extends Model
     protected $hidden = ['deleted_at', 'created_at','updated_at'];
 
     //Isikan field yang bisa diisi ke tabel
-    protected $fillable = ['str','int','bool','date'];
+    protected $fillable = ['str','int','bool','date','id_unit'];
 
     //Jika terdapat model detail pada model ini, tambahkan fungsi berikut
     use \App\BDSM\ModelDetailHelper;

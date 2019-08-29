@@ -28,6 +28,7 @@ class CreateTestsTable extends Migration
             $table->string('str'); //varchar/string
             $table->boolean('bool'); //tinyint/boolean
             $table->date('date'); //date
+            $table->integer('id_unit')->unsigned(); //integer
 
             $table->softDeletes(); //membuat field deleted_at yang bertindak sebagai softdelete
             $table->timestamps(); //membuat field created_at & updated_at

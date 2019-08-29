@@ -37,7 +37,8 @@ class DatabaseSeeder extends Seeder
                     'int' => $i,
                     'str' => 'string ' . $i,
                     'bool' => 0,
-                    'date' => '2019-10-10'
+                    'date' => '2019-10-10',
+                    'id_unit' => rand(1,3)
                 ]
             ]);
             for ($j=1; $j <= rand(1,3); $j++) {
@@ -55,5 +56,18 @@ class DatabaseSeeder extends Seeder
                 DB::table('test_detail')->insert($detail);
             }
         }
+
+        DB::table('unit')->truncate();
+        DB::table('unit')->insert([
+            [
+                'nama' => 'pcs',
+            ],
+            [
+                'nama' => 'kg',
+            ],
+            [
+                'nama' => 'xxx',
+            ],
+        ]);
     }
 }

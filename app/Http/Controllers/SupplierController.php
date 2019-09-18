@@ -3,39 +3,38 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Unit;
+use App\Supplier;
 
-class UnitController extends Controller
+class SupplierController extends Controller
 {
     public function index()
     {
-        $data = Unit::select('*');
-        $tableData = (new Unit)->getTableProperties();
-        $data = $data->searchAllFields($tableData);
+        $data = Supplier::select('*');
+        $data = $data->searchAllFields();
         return bd_json($data);
     }
 
     public function store(Request $request)
     {
-        $data = (new Unit)->record($request);      
+        $data = (new Supplier)->record($request);      
         return bd_json($data);
     }
 
     public function show($id)
     {
-        $data = Unit::find($id);
+        $data = Supplier::find($id);
         return bd_json($data);
     }
 
     public function update(Request $request, $id)
     {
-        $data = Unit::find($id)->record($request);
+        $data = Supplier::find($id)->record($request);
         return bd_json($data);
     }
 
     public function destroy($id)
     {
-        $data = Unit::find($id);
+        $data = Supplier::find($id);
         if ($data) {
             $data->delete();
         }

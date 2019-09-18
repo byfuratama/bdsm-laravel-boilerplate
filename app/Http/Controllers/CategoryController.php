@@ -3,39 +3,38 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Unit;
+use App\Category;
 
-class UnitController extends Controller
+class CategoryController extends Controller
 {
     public function index()
     {
-        $data = Unit::select('*');
-        $tableData = (new Unit)->getTableProperties();
-        $data = $data->searchAllFields($tableData);
+        $data = Category::select('*');
+        $data = $data->searchAllFields();
         return bd_json($data);
     }
 
     public function store(Request $request)
     {
-        $data = (new Unit)->record($request);      
+        $data = (new Category)->record($request);      
         return bd_json($data);
     }
 
     public function show($id)
     {
-        $data = Unit::find($id);
+        $data = Category::find($id);
         return bd_json($data);
     }
 
     public function update(Request $request, $id)
     {
-        $data = Unit::find($id)->record($request);
+        $data = Category::find($id)->record($request);
         return bd_json($data);
     }
 
     public function destroy($id)
     {
-        $data = Unit::find($id);
+        $data = Category::find($id);
         if ($data) {
             $data->delete();
         }

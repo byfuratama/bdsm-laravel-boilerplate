@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Unit extends Model
+class Category extends Model
 {
     use SoftDeletes;
     use \App\BDSM\ModelHelper;

@@ -24,7 +24,35 @@ class BuilderServiceProvider extends ServiceProvider
             return $this->join($ft,$pk,$fk);
         });
 
+        Builder::macro('leftJoinModel', function ($fm, $as, $pk, $fk) {
+            $ft = \DB::raw("({$fm->toSql()}) {$as}");
+            $this->addBinding($fm->getBindings(),'join');
+
+            return $this->leftJoin($ft,$pk,$fk);
+        });
+
         Builder::macro('searchAllFields', function () {
+            $filter = request('filter');
+            $cfilt = (array) json_decode(request('colFilter'));
+            $query = $this;
+            if ($filter != null && $filter != '') {
+                $query = $query->where(function($q) use ($filter,$cfilt) {
+                    foreach ($cfilt as $key => $val) {
+                        $q = $q->orWhere($key,'LIKE', '%' . $filter . '%');
+                    }
+                });
+            }
+            if (count($cfilt) > 0) {
+                foreach ($cfilt as $key => $val) {
+                    if ($val !== '')
+                        $query = $query->where($key,'LIKE', '%' . $val . '%');
+                }
+                return $query;
+            }
+            return $query->select('*');
+        });
+
+        Builder::macro('searchAllFieldsOld', function () {
             $filter = request('filter');
             $query = $this;
             if ($filter != null && func_num_args() > 0) {
@@ -33,6 +61,23 @@ class BuilderServiceProvider extends ServiceProvider
                     foreach ($props as $prop) {
                         foreach ($prop['fields'] as $col) {
                             $q = $q->orWhere($prop['table'].'.'.$col,'LIKE', '%' . $filter . '%');
+                        }
+                    }
+                });
+                return $query->select('*');
+            }
+            return $query->select('*');
+        });
+
+        Builder::macro('searchFields', function () {
+            $filter = request('colFilter');
+            $query = $this;
+            if ($filter != null && func_num_args() > 0) {
+                $props = func_get_args();
+                $query = $query->where(function($q) use ($props,$filter) {
+                    foreach ($props as $prop) {
+                        foreach ($filter as $col) {
+                            $q = $q->where($prop['table'].'.'.$col,'LIKE', '%' . $filter[$col] . '%');
                         }
                     }
                 });

@@ -10,7 +10,8 @@
         "laravel/tinker": "~1.0",
         "nesbot/carbon": "^1.39",
         "shalvah/laravel-jsend": "^1.1",
-        "tymon/jwt-auth": "^1.0.0-rc.2"
+        "tymon/jwt-auth": "^1.0.0-rc.2",
+        "mike42/escpos-php": "^1.5"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

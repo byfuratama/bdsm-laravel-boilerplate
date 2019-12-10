@@ -25,8 +25,16 @@ class ItemController extends Controller
     }
 
     public function indexAktif()
-    {        
-        $data = Item::where('active',1)->orderBy('name')->get();
+    {
+        $filter = request('filter','');
+        $data = Item::where(function ($query) use($filter) {
+            $query->whereRaw("'{$filter}' LIKE CONCAT('%',code)");
+        })->where('active',1)->orderBy('name')->get();
+        if (count($data) == 0) {
+            $data = Item::where(function ($query) use($filter) {
+                $query->whereRaw("'{$filter}' LIKE CONCAT('%',code)")->orWhere('name','LIKE',"%{$filter}%");
+            })->where('active',1)->orderBy('name')->get();
+        }
         return bd_json($data);
     }
 

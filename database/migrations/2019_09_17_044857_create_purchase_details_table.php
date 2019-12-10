@@ -19,6 +19,7 @@ class CreatePurchaseDetailsTable extends Migration
             $table->unsignedInteger('item_id');
             $table->string('item_name');
             $table->decimal('item_price',13,2);
+            $table->decimal('item_capital',13,2);
             $table->integer('item_qty');
             
             $table->softDeletes();

@@ -41,4 +41,8 @@ trait ModelHelper {
             "fields" => $this->fillable
         ];
     }
+
+    public function getCols() {
+        return $this->fillable;
+    }
 }

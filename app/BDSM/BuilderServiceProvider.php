@@ -31,18 +31,22 @@ class BuilderServiceProvider extends ServiceProvider
             return $this->leftJoin($ft,$pk,$fk);
         });
 
-        Builder::macro('searchAllFields', function () {
+        Builder::macro('searchAllFields', function ($colFilter = '') {
             $filter = request('filter');
-            $cfilt = (array) json_decode(request('colFilter'));
+            if ($colFilter !== '')
+                $cfilt = $colFilter;
+            else
+                $cfilt = (array) json_decode(request('colFilter'));
             $query = $this;
             if ($filter != null && $filter != '') {
                 $query = $query->where(function($q) use ($filter,$cfilt) {
                     foreach ($cfilt as $key => $val) {
-                        $q = $q->orWhere($key,'LIKE', '%' . $filter . '%');
+                        $fil = is_nan($key) ? $key : $val;
+                        $q = $q->orWhere($fil,'LIKE', '%' . $filter . '%');
                     }
                 });
             }
-            if (count($cfilt) > 0) {
+            if ($colFilter === '' && count($cfilt) > 0) {
                 foreach ($cfilt as $key => $val) {
                     if ($val !== '')
                         $query = $query->where($key,'LIKE', '%' . $val . '%');

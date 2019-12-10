@@ -3,11 +3,29 @@
 namespace App\BDSM;
 
 trait ModelDetailHelper {
-  public function recordDetail($detail) {
+
+//   public function iterateDetail($detail, $callback) {
+//     $detailData = [];
+//     foreach ($detail as $dtl) {
+//         $dtl[$this->detailForeignKey] = $this->id;
+//         $detailData[] = (new $this->detailModelClass)->record($dtl);
+//         if ($callback !== null && is_callable($callback)) {
+//             $callback($dtl);
+//         }
+//     }
+//     $this->detail = $detailData;
+
+//     return $this;
+// }
+
+  public function recordDetail($detail, $callback = null) {
       $detailData = [];
       foreach ($detail as $dtl) {
           $dtl[$this->detailForeignKey] = $this->id;
           $detailData[] = (new $this->detailModelClass)->record($dtl);
+          if ($callback !== null && is_callable($callback)) {
+              $callback($dtl);
+          }
       }
       $this->detail = $detailData;
 

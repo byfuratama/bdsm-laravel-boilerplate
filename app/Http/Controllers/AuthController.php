@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 
+use App\User;
+use Illuminate\Support\Facades\Hash;
+
 class AuthController extends Controller
 {
     protected function customPayload() {
@@ -65,5 +68,26 @@ class AuthController extends Controller
 
     public function payload() {
         return auth()->payload();
+    }
+
+    public function updateInfo()
+    {
+        $data = auth()->user()->record([
+            "name" => request('name'),
+            "username" => request('username'),
+        ]);
+        return bd_json($data);
+    }
+
+    public function updatePassword()
+    {
+        $data = auth()->user();
+        if (!Hash::check(request('oldPassword'), $data->password)) {
+            return jsend_fail();
+        }
+        $data = $data->record([
+            "password" => request('password')
+        ]);
+        return bd_json($data);
     }
 }

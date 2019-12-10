@@ -23,6 +23,8 @@ Route::get('data', function() {
     echo "asdf";
 });
 
+Route::get('testprint', 'ReceiptController@print_struk_test');
+
 //Buat beberapa route:group untuk hak akses yang berbeda2 pisahkan dengan | jika ada 2 atau lebih hak akses yang dapat menggunakannya
 //Route::group(['middleware' => ['jwt.verify:<HAK_AKSES>']], function ()) {....
 
@@ -68,25 +70,30 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::put('category/data/{id}', 'CategoryController@update');
     Route::delete('category/data/{id}', 'CategoryController@destroy');
 
-    Route::get('sales/data', 'SalesController@index');
-    Route::post('sales/data', 'SalesController@store');
-    Route::get('sales/data/{id}', 'SalesController@show');
-    Route::put('sales/data/{id}', 'SalesController@update');
-    Route::delete('sales/data/{id}', 'SalesController@destroy');
-    Route::get('sales/detail', 'SalesController@indexWithDetail');
-    Route::get('sales/detail/{id}', 'SalesController@showWithDetail');
-    Route::get('sales/kredit', 'SalesController@indexCredit');
+    Route::get('sales/data', 'SaleController@index');
+    Route::post('sales/data', 'SaleController@store');
+    Route::get('sales/data/{id}', 'SaleController@show');
+    Route::put('sales/data/{id}', 'SaleController@update');
+    Route::delete('sales/data/{id}', 'SaleController@destroy');
+    Route::get('sales/num', 'SaleController@noOrder');
+    Route::get('sales-detail/data/{id}', 'SaleDetailController@byIDParent');
 
-    Route::get('sales/num', 'SalesController@numSales');
-
-    // Route::get('sales-detail/data/{id}', 'SalesDetailController@byIDSales');
+    Route::get('purchases/data', 'PurchaseController@index');
+    Route::post('purchases/data', 'PurchaseController@store');
+    Route::get('purchases/data/{id}', 'PurchaseController@show');
+    Route::put('purchases/data/{id}', 'PurchaseController@update');
+    Route::delete('purchases/data/{id}', 'PurchaseController@destroy');
+    Route::get('purchases/num', 'PurchaseController@noOrder');
+    Route::get('purchases-detail/data/{id}', 'PurchaseDetailController@byIDParent');
     
-    Route::get('report/customer','ReportController@customer');
-    Route::get('report/produk','ReportController@produk');
-    Route::get('report/order','ReportController@order');
+    Route::get('report/uang','ReportController@uang');
+    Route::get('report/item','ReportController@item');
+    Route::get('report/sales','ReportController@sales');
 
-    Route::get('report/customer/excel','ReportController@customerExcel');
-    Route::get('report/produk/excel','ReportController@produkExcel');
-    Route::get('report/order/excel','ReportController@orderExcel');
+    Route::get('report/uang/excel','ReportController@uangExcel');
+    Route::get('report/item/excel','ReportController@itemExcel');
+    Route::get('report/sales/excel','ReportController@salesExcel');
+
+    Route::post('receipt-print', 'ReceiptController@print_struk');
 
 });

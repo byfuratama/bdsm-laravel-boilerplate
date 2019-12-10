@@ -15,9 +15,10 @@ class CreateSalesTable extends Migration
     {
         Schema::create('sales', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('order_no');
+            $table->string('order_no')->unique();
             $table->unsignedInteger('user_id');
             $table->integer('cash')->default(0);
+            $table->dateTime('order_at');
             $table->timestamps();
             $table->softDeletes();
         });

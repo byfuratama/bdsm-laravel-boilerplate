@@ -20,6 +20,7 @@ class CreatePurchasesTable extends Migration
             $table->unsignedInteger('sup_id');
             $table->unsignedInteger('user_id');
             $table->decimal('credit',13,2);
+            $table->dateTime('order_at');
             $table->timestamps();
             $table->softDeletes();
         });

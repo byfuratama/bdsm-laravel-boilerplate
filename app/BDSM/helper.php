@@ -4,8 +4,22 @@ if (! function_exists('bd_json')) {
   function bd_json($data, $additionalData = []) {
     $json = [];
     $paginate = request('paginate');
-    if ($data != null) {
-      if (get_class($data) === "Illuminate\\Database\\Eloquent\\Builder") {
+    $sortBy = request('sortBy');
+    $descending = request('descending');
+    if ($data !== null) {
+      if (is_array($data)) {
+        return jsend_success($data);
+      }
+      if (get_class($data) === "Illuminate\\Database\\Eloquent\\Builder" || get_class($data) === "Illuminate\\Database\\Query\\Builder") {
+        if ($sortBy != null) {
+          if ($descending == null) {
+            $descending = false;
+          }
+          if ($descending === true || $descending === 'true')
+            $data = $data->orderBy($sortBy,'desc');
+          else
+            $data = $data->orderBy($sortBy,'asc');
+        }
         if ($paginate != null && is_numeric($paginate)) {
           $data = $data->paginate($paginate);
         } else {
@@ -53,4 +67,15 @@ if (! function_exists('tgl_indo')) {
     return $pecahkan[2] . ' ' . $bulan[ (int)$pecahkan[1] ] . ' ' . $pecahkan[0];
   }
     
+}
+
+if (! function_exists('array_replace_element')) {
+  function array_replace_element($array,$old,$new){
+    for($i=0;$i<count($array);$i++) {
+      if($array[$i] == $old) {
+        $array[$i] = $new;
+      }
+    }
+    return $array;
+  }
 }
